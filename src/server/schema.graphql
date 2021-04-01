@@ -1,0 +1,43 @@
+type Parent {
+  id: ID!
+  text: String!
+  children: ChildConnection
+}
+
+type Child {
+  id: ID!
+  text: String!
+}
+
+type ChildEdge {
+  node: Child!
+}
+
+type ChildConnection {
+  edges: [ChildEdge]!
+}
+
+input CreateChildInput {
+  text: String!
+}
+
+type UpdateParentReturn {
+  children: [Child]
+  parent: Parent!
+}
+
+input UpdateParentInput {
+  id: ID!
+  text: String
+  children: [CreateChildInput!]
+}
+
+type Query {
+  listParents: [Parent]!
+}
+
+type Mutation {
+  createParent(text: String!): Parent
+
+  updateParent(input: UpdateParentInput!): UpdateParentReturn
+}
